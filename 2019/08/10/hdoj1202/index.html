@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="Zoey"><meta name="renderer" content="webkit"><meta name="copyright" content="Zoey"><meta name="keywords" content="Hexo"><meta name="description" content="从前很慢"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>关于HDOJ 1202题(绩点计算) 的理解(C/C++) · Mr.Z's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/Icon.jpg" width="100%"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">zoey</div><div class="profile-signature">开始搞事情了</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/ironic333" target="_black">ironic333</a></span><span><a href="//Zoey1038569979.github.io" target="_black">Myself</a></span><span><a href="https://fevxmn.coding-pages.com/" target="_black">国内主页</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Z's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">关于HDOJ 1202题(绩点计算) 的理解(C/C++)</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-08-10</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="hdoj"> hdoj</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="cout输出格式"> cout输出格式</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="粗心"> 粗心</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="细节"> 细节</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;题目有很多的小细节，一不注意就容易中招。感谢 
+<a href="https://blog.csdn.net/qq_39562952/article/details/78853316" target="_blank" rel="noopener"> 摆渡过江</a>
+的代码点醒。
+<br>&nbsp;&nbsp;&nbsp;&nbsp;首先，区间不是全整数，而是存在有小数的分数情况的，并且，举例来说，如89.9是属于3点绩点。
+<br>&nbsp;&nbsp;&nbsp;&nbsp;再然后是，缺考情况不能把学分加和，可能脑袋有点晕了，之前WA代码就是不管三七二十一，直接把所有学分加和了。<br><br>
+
+
+<hr>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><center>The calculation of GPA</center>
+<br>
+Problem Description
+每学期的期末，大家都会忙于计算自己的平均成绩，这个成绩对于评奖学金是直接有关的。国外大学都是计算GPA(grade point average) 又称GPR(grade point ratio)，即成绩点数与学分的加权平均值来代表一个学生的成绩的。那么如何来计算GPA呢？ 
+
+<p>一般大学采用之计分法 </p>
+<p>A90 - 100 4 点<br>B80 - 89 3 点<br>C70 - 79 2 点<br>D60 - 69 1 点<br>E0 - 59 0 点 </p>
+<p>例如：某位学生修习三门课，其课目、学分及成绩分别为：<br>英文：三学分、92 分；化学：五学分、80 分；数学：二学分、60分，则GPA的算法如下： </p>
+<p>科目 学分 分数 点数 分数×点数<br>英文  3    92    4     12<br>化学  5    80    3     15<br>数学  2    60    1      2<br>合计  10   29<br>29/10=2.9<br>2.9即为某生的GPA<br>下面有请你写一个用于计算GPA的程序。</p>
+<p>Input<br>包含多组数据，每组数据的第一行有一个数N，接下来N行每行表示一门成绩。每行有两个实型的数 s,p，s表示这门课的学分,p表示该学生的成绩（百分制）。如果p=-1则说明该学生这门课缺考，是不应该计算在内的。</p>
+<p>Output<br>对每组数据输出一行，表示该学生的GPA，保留两位小数。如果GPA不存在，输出-1。</p>
+<p>Sample Input<br>3<br>3 92<br>5 80<br>2 60</p>
+<p>Sample Output<br>2.90</p>
+<p>Author<br>Speakless<br><br><br></p>
+<hr>
+<h2 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h2><p>More info:<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1202" target="_blank" rel="noopener">Question</a></p>
+<br>
+
+<hr>
+<h2 id="cout控制小数点后位数（复习）"><a href="#cout控制小数点后位数（复习）" class="headerlink" title="cout控制小数点后位数（复习）"></a>cout控制小数点后位数（复习）</h2><p>头文件为：iomanip<br><br>函数为：fixed &lt;&lt; setprecision(2)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;iomanip&gt;</span></span><br><span class="line">cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; 变量&lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Accepted代码"><a href="#Accepted代码" class="headerlink" title="Accepted代码"></a>Accepted代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include&lt;iomanip&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int n;</span><br><span class="line">double s, p;</span><br><span class="line">double sum_s, sum_sp;</span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; n) &#123;</span><br><span class="line">        sum_s = sum_sp = 0.0;//学分总和 学分*点数总和</span><br><span class="line">        <span class="keyword">while</span> (n--)</span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; s &gt;&gt; p;</span><br><span class="line">            <span class="keyword">if</span> ((int)p + 1 == 0)  //缺考</span><br><span class="line">                <span class="built_in">continue</span>;</span><br><span class="line">            sum_s += s;</span><br><span class="line">            <span class="keyword">if</span> (p &gt;= 90)</span><br><span class="line">                sum_sp += 4 * s;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p &gt;= 80)</span><br><span class="line">                sum_sp += 3 * s;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p &gt;= 70)</span><br><span class="line">                sum_sp += 2 * s;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p &gt;= 60)</span><br><span class="line">                sum_sp += s;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sum_s != 0)</span><br><span class="line">            cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; sum_sp / sum_s &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            cout &lt;&lt; -1 &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+<br>
+
+<hr>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p>我的AC代码和参考博客的代码差不多，只是习惯了用c++的输入输出，以下是<a href="https://blog.csdn.net/qq_39562952/article/details/78853316" target="_blank" rel="noopener"> 摆渡过江 </a>老哥的代码（c语言）：<br><br></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;  </span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;math.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include &lt;vector&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int n;</span><br><span class="line">    double s,p;</span><br><span class="line">    double sum1,sum2;</span><br><span class="line">    <span class="keyword">while</span>(scanf(<span class="string">"%d"</span>,&amp;n)!=EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        sum1=sum2=0.0;</span><br><span class="line">        <span class="keyword">while</span>(n--)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf(<span class="string">"%lf%lf"</span>,&amp;s,&amp;p);</span><br><span class="line">            <span class="keyword">if</span>((int)p+1==0)</span><br><span class="line">                <span class="built_in">continue</span>;</span><br><span class="line">            sum1+=s;</span><br><span class="line">            <span class="keyword">if</span>(p&gt;=90)</span><br><span class="line">                sum2+=4*s;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p&gt;=80)</span><br><span class="line">                sum2+=3*s;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p&gt;=70)</span><br><span class="line">                sum2+=2*s;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p&gt;=60)</span><br><span class="line">                sum2+=s;</span><br><span class="line">             </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sum1!=0)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%.2lf\n"</span>,sum2/sum1);</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"-1\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><br><br><br><br><br></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://Zoey1038569979.github.io">Zoey</a></p><p> <span>Link:  </span><a href="http://Zoey1038569979.github.io/2019/08/10/hdoj1202/">http://Zoey1038569979.github.io/2019/08/10/hdoj1202/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2019/08/10/hdoj1201/" title="关于HDOJ 1201题(18岁生日) 的理解(C/C++)"><span>NextPost ></span><br><span class="nextTitle">关于HDOJ 1201题(18岁生日) 的理解(C/C++)</span></a><div class="clear"></div></div><div id="comment"><div id="container"></div><link rel="stylesheet" href="https://billts.site/extra_css/gitment.css"><script src="https://billts.site/js/gitment.js"></script><script>var gitment = new Gitment({
+  id: '关于HDOJ 1202题(绩点计算) 的理解(C/C++)',
+  owner: 'Zoey1038569979',
+  repo: 'Zoey1038569979.github.io',
+  oauth: {
+    client_id: '418f60571b475137fb02',
+    client_secret: '6a9bad2279afb32f22db0cc07b7a1ca08baac4fa',
+  },
+})
+gitment.render('container')</script></div></section></article><footer><div id="cxo-footer-outer"><link rel="stylesheet" href="/live2d/css/live2d.css"><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="280" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://zoey1038569979.github.io/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/tia/model.json");</script><div id="cxo-footer-inner"></div><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原题链接"><span class="toc-number">2.</span> <span class="toc-text">原题链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cout控制小数点后位数（复习）"><span class="toc-number">3.</span> <span class="toc-text">cout控制小数点后位数（复习）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Accepted代码"><span class="toc-number">4.</span> <span class="toc-text">Accepted代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考博客"><span class="toc-number">5.</span> <span class="toc-text">参考博客</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
