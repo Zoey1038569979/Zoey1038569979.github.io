@@ -132,7 +132,7 @@
 <p><img src="/images/android_Jdbc_Mysql/import_1.png" alt="导入jar"></p>
 <p><img src="/images/android_Jdbc_Mysql/import_2.png" alt="Add As Library"></p>
 <p>如果结果在app下的build.gradle中有如下的依赖，那么说明你添加对了：</p>
-<p><img src="/images/android_Jdbc_Mysql/dependenci.png" alt="build.gradle"></p>
+<p><img src="/images/android_Jdbc_Mysql/dependencies.png" alt="build.gradle"></p>
 <h3 id="创建连接数据库的类"><a href="#创建连接数据库的类" class="headerlink" title="创建连接数据库的类"></a>创建连接数据库的类</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;创建 DBUtils类，用来连接数据库以及查询数据库内数据<br><br>需要注意的是，在Android开发中通过localhost或127.0.0.1访问本地服务器时，如使用http访问时，会报java.net.ConnectException: localhost/127.0.0.1:3306 -Connection refused异常。</p>
 <p>原因：Android模拟器本身把自己当做了localhost或127.0.0.1，而此时我们又通过localhost或127.0.0.1访问本地服务器，所以会抛出异常了。</p>
 <p>=====&gt;在模拟器上可以用10.0.2.2代替127.0.0.1或localhost即可正常访问或调试</p>
