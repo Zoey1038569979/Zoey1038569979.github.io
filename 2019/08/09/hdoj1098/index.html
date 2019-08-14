@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="Zoey"><meta name="renderer" content="webkit"><meta name="copyright" content="Zoey"><meta name="keywords" content="Hexo"><meta name="description" content="从前很慢"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>关于HDOJ 1098题(Ignatius's puzzle) 的理解(C/C++) · Mr.Z's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/Icon.jpg" width="100%"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">zoey</div><div class="profile-signature">开始搞事情了</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/ironic333" target="_black">ironic333</a></span><span><a href="//Zoey1038569979.github.io" target="_black">outland</a></span><span><a href="https://evtzyz.coding-pages.com/" target="_black">国内主页</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);background-size:100% 100%;background-attachment: fixed;"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Z's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">关于HDOJ 1098题(Ignatius's puzzle) 的理解(C/C++)</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-08-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="hdoj"> hdoj</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数学归纳法"> 数学归纳法</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="排列组合公式"> 排列组合公式</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ignatius’s puzzle</p>
+<p>Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 65536/32768 K (Java/Others)<br>Total Submission(s): 12827    Accepted Submission(s): 9025</p>
+<p>Problem Description<br>&nbsp;&nbsp;&nbsp;&nbsp;Ignatius is poor at math,he falls across a puzzle problem,so he has no choice but to appeal to Eddy. this problem describes that:f(x)=5<em>x^13+13</em>x^5+k<em>a</em>x,input a nonegative integer k(k&lt;10000),to find the minimal nonegative integer a,make the arbitrary integer x ,65|f(x)if<br>no exists that a,then print “no”.</p>
+<p>Input<br>&nbsp;&nbsp;&nbsp;&nbsp;The input contains several test cases. Each test case consists of a nonegative integer k, More details in the Sample Input.</p>
+<p>Output<br>&nbsp;&nbsp;&nbsp;&nbsp;The output contains a string “no”,if you can’t find a,or you should output a line contains the a.More details in the Sample Output.</p>
+<p>Sample Input<br>11<br>100<br>9999</p>
+<p>Sample Output<br>22<br>no<br>43</p>
+<p>Author<br>&nbsp;&nbsp;&nbsp;&nbsp;eddy</p>
+<h2 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h2><p>More info:<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1098" target="_blank" rel="noopener">Question</a></p>
+<h2 id="数学归纳法（第一数学归纳法）"><a href="#数学归纳法（第一数学归纳法）" class="headerlink" title="数学归纳法（第一数学归纳法）"></a>数学归纳法（第一数学归纳法）</h2><p><br>1）当n=初始值时（一般为1或者0或者2之类的）,显然成立.<br><br>2）假设当n=k时（把式中n换成k,写出来）成立,<br><br> 则当n=k+1时,（这步比较困难,化简步骤往往繁琐,考试时可以直接写结果)该式也成立.<br><br> 由（1）（2）得,原命题对任意正整数均成立</p>
+<h2 id="排列组合（高中内容，快忘了……）"><a href="#排列组合（高中内容，快忘了……）" class="headerlink" title="排列组合（高中内容，快忘了……）"></a>排列组合（高中内容，快忘了……）</h2><p>排列A<sub>n</sub> <sup>m</sup> = n×（n-1）.（n-m+1）=n!/（n-m）!(n为下标,m为上标,以下同)</p>
+<p>组合C<sub>n</sub> <sup>m</sup> = P(n,m)/P(m,m) =n!/(m!（n-m）!)；</p>
+<p>例如A<sub>4</sub> <sup>2</sup> = 4!/2!=4 * 3=12<br><br>C<sub>4</sub> <sup>2</sup> = 4!/(2! * 2!)=4 * 3/(2 * 1)=6</p>
+<h2 id="Accepted代码"><a href="#Accepted代码" class="headerlink" title="Accepted代码"></a>Accepted代码</h2><p>代码很简单：<br><br>但是要先了解如果k * a+18能整除65，那么f（x）就能整除65</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int k, a;</span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; k) &#123;</span><br><span class="line">        a = -1;</span><br><span class="line">        <span class="keyword">for</span> (int i = 0; i &lt; 66; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((18 + k * i )% 65 == 0) &#123;</span><br><span class="line">                a = i;</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (a != -1) cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">else</span> cout &lt;&lt; <span class="string">"no"</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数学归纳法应用:<br><br>证明：当k * a+18能整除65时，f（x）能整除65<br><br>假设f（x）能整除65</p>
+<p>f（x）= 5 * x <sup>13</sup>&gt; + 13 * x <sup>5</sup>&gt; + k * a * x</p>
+<p>则</p>
+<p>f（x+1）= 5 * (x+1) <sup>13</sup>+ 13 * (x+1) <sup>5</sup> + k * a *  (x+1)</p>
+<p>按二项式展开:<br><br>f（x+1）=5 <em>（C<sub>13</sub> <sup>13</sup> * X<sup>13</sup> +C<sub>13</sub> <sup>12</sup> * X <sup>12</sup> +C<sub>13</sub> <sup>11</sup> * X <sup>11</sup> +……+C<sub>13</sub> <sup>0</sup> * x <sup>0</sup>）+ 13</em> (C<sub>5</sub> <sup>5</sup> * X <sup>5</sup> +C<sub>5</sub> <sup>4</sup> * X <sup>4</sup> +…+ C <sub>5</sub> <sup>0</sup> * x<sup>0</sup>)+k * a *  (x+1)</p>
+<p><br> =f(x)+13 <em>（C<sub>13</sub><sup>12</sup> * X<sup>12</sup>+C<sub>13</sub><sup>11 </sup></em> X<sup>11</sup>+……+C<sub>13</sub><sup>0</sup> <em>x<sup>0</sup>)+5</em>(C<sub>5</sub><sup>4</sup> * X<sup>4</sup>+…+C<sub>5</sub><sup>0</sup> * x<sup>0</sup>)+k * a</p>
+<p><br>=f(x)+5<em>（X<sup>5</sup>+C<sub>5</sub><sup>4</sup> * X<sup>4</sup>+…+C<sub>5</sub><sup>1</sup> * x<sup>1</sup>）+13</em>(C<sub>13</sub><sup>12</sup> * X<sup>12</sup>+C<sub>13</sub><sup>11</sup> * X<sup>11</sup>+……+C<sub>13</sub><sup>1</sup> * x<sup>1</sup>）+ k * a+18</p>
+<p><br>(p.s: 18=C<sub>13</sub><sup>1</sup>+C<sub>5</sub><sup>1</sup>)</p>
+<p><br><br>f(x）/65能整除，而多项式5<em>（X<sup>5</sup>+C<sub>5</sub><sup>4</sup> * X<sup>4</sup>+…+C<sub>5</sub><sup>1</sup> * x<sup>1</sup>）+13</em>(C<sub>13</sub><sup>12</sup> * X<sup>12</sup>+C<sub>13</sub><sup>11</sup> * X<sup>11</sup>+……+C<sub>13</sub><sup>1</sup> * x<sup>1</sup>） 也能整除65，<br><br>所以当k * a+18能整除65时即f(x+1)能整除65<br><br>综上所述，当k * a+18能整除65时，f（x）能整除65</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p>非常感谢<a href="https://blog.csdn.net/qq_38294039/article/details/76386298" target="_blank" rel="noopener">qq_38294039</a>的博文</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://Zoey1038569979.github.io">Zoey</a></p><p> <span>Link:  </span><a href="http://Zoey1038569979.github.io/2019/08/09/hdoj1098/">http://Zoey1038569979.github.io/2019/08/09/hdoj1098/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/08/09/hdoj1106/" title="关于HDOJ 1106题(排序) 的理解(C/C++)"><span>< PreviousPost</span><br><span class="prevTitle">关于HDOJ 1106题(排序) 的理解(C/C++)</span></a><a class="nextSlogan" href="/2019/08/09/hdoj1076/" title="关于HDOJ 1076题(An Easy Task(x后第n个闰年)) 的理解(C/C++)"><span>NextPost ></span><br><span class="nextTitle">关于HDOJ 1076题(An Easy Task(x后第n个闰年)) 的理解(C/C++)</span></a><div class="clear"></div></div><div id="comment"><div id="container"></div><link rel="stylesheet" href="https://billts.site/extra_css/gitment.css"><script src="https://billts.site/js/gitment.js"></script><script>var gitment = new Gitment({
+  id: '关于HDOJ 1098题(Ignatius's puzzle) 的理解(C/C++)',
+  owner: 'Zoey1038569979',
+  repo: 'Zoey1038569979.github.io',
+  oauth: {
+    client_id: '418f60571b475137fb02',
+    client_secret: '6a9bad2279afb32f22db0cc07b7a1ca08baac4fa',
+  },
+})
+gitment.render('container')</script></div></section></article><footer><div id="cxo-footer-outer"><link rel="stylesheet" href="/live2d/css/live2d.css"><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="280" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://zoey1038569979.github.io/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/tia/model.json");</script><div id="cxo-footer-inner"></div><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原题链接"><span class="toc-number">2.</span> <span class="toc-text">原题链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学归纳法（第一数学归纳法）"><span class="toc-number">3.</span> <span class="toc-text">数学归纳法（第一数学归纳法）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排列组合（高中内容，快忘了……）"><span class="toc-number">4.</span> <span class="toc-text">排列组合（高中内容，快忘了……）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Accepted代码"><span class="toc-number">5.</span> <span class="toc-text">Accepted代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考博客"><span class="toc-number">6.</span> <span class="toc-text">参考博客</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
