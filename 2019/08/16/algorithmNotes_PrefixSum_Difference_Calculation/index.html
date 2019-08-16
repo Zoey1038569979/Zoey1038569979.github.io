@@ -100,12 +100,12 @@
   .saying--><div class="cxo-profile-inner"><div class="profile-name">zoey</div><div class="profile-signature">开始搞事情了</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/ironic333" target="_black">ironic333</a></span><span><a href="//Zoey1038569979.github.io" target="_black">outland</a></span><span><a href="https://evtzyz.coding-pages.com/" target="_black">国内主页</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);background-size:100% 100%;background-attachment: fixed;"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Z's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">算法笔记 前缀和 差分 快速幂(C/C++)</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-08-16</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="基础算法"> 基础算法</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="算法笔记"> 算法笔记</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="前缀和"> 前缀和</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="差分"> 差分</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="快速幂"> 快速幂</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">1.5k</span> | Reading time: <span class="post-count">6</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p><br>&nbsp;&nbsp;&nbsp;&nbsp;早上起来，室友还在睡，没法尽情敲代码，所以闲得无聊去逛了下某介于AC间的小破站，复习了一下一些基础算法。也就是tags和标题中也有写到的前缀和、差分和快速幂。首先呢，还是必须得感谢下阿婆主的视频讲解的，确实比直接看代码什么的来得形象很多。在此记录一下，也是我对学习的理解和笔记吧。<br><br>贴出老哥的视频，文章大部分内容也是来源于老哥的视频 &nbsp;【AgOHの算法胡扯】 &nbsp; 的<a href="https://www.bilibili.com/video/av63194309" target="_blank" rel="noopener">【AgOHの算法胡扯】前缀和 差分 快速幂</a></p>
 <p><br><br><br></p>
 <hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;可能小伙伴们会说，现在都有视频学习了，干嘛还去逛文章看啊，生涩难懂不如视频来得简单粗暴。这里分享一下我从很多的阿婆主以及博客主那儿得来的，也算是我自己的一个偏见吧：<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>视频学习虽然大部分来得生动形象，但是讲真的，很佷很费时间！！！现在的视频，除非是一些大学的公开课那种，又或者是良心阿婆主，否则大多数（起码我的感觉，或者偏见是这样）都是长于20分钟的，哪怕你是3倍速看视频，忽略大脑是否能反应得过来，也忽略你对知识的遗忘速度，但是你还是得跟着视频走一遍。否则很多时候你如果跳着看视频的话，是容易看不懂他说的啥的，因为大多数视频是没有给你标时间点的，你不会知道他哪个点在说哪个知识点。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>然后再说文章和博客，虽然可能取决于博主和作者的思维和写作水平，但是文章一类的才是真真的简单粗暴！你可以自由地己获取你想要的部分。一般的文章都是会有自己的目录的，根据你想要的获取的具体知识点，重点跳到你想要看的地方，反复阅读。而且一般情况下（能学懂的前提），是比视频学习的效率高出很多的，同样地20分钟，看一些学习视频你最多看1遍，但是同内容而言文章够你看好几遍的了。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>当然也不是说视频不好，感觉可能视频是适合初学入门吧，生动形象，能及时跟着视频主的思路走。</p>
-<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>现有一段数组，求出[l,r]内的所有数的和。<br><br><br></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;可能小伙伴们会说，现在都有视频学习了，干嘛还去逛文章看啊，生涩难懂不如视频来得简单粗暴。这里分享一下我从很多的阿婆主以及博客主那儿得来的，也算是我自己的一个偏见吧：<br><br>&nbsp;&nbsp;&nbsp;&nbsp;视频学习虽然大部分来得生动形象，但是讲真的，很佷很费时间！！！现在的视频，除非是一些大学的公开课那种，又或者是良心阿婆主，否则大多数（起码我的感觉，或者偏见是这样）都是长于20分钟的，哪怕你是3倍速看视频，忽略大脑是否能反应得过来，也忽略你对知识的遗忘速度，但是你还是得跟着视频走一遍。否则很多时候你如果跳着看视频的话，是容易看不懂他说的啥的，因为大多数视频是没有给你标时间点的，你不会知道他哪个点在说哪个知识点。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;然后再说文章和博客，虽然可能取决于博主和作者的思维和写作水平，但是文章一类的才是真真的简单粗暴！你可以自由地己获取你想要的部分。一般的文章都是会有自己的目录的，根据你想要的获取的具体知识点，重点跳到你想要看的地方，反复阅读。而且一般情况下（能学懂的前提），是比视频学习的效率高出很多的，同样地20分钟，看一些学习视频你最多看1遍，但是同内容而言文章够你看好几遍的了。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;当然也不是说视频不好，感觉可能视频是适合初学入门吧，生动形象，能及时跟着视频主的思路走。</p>
+<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;现有一段数组，求出[l,r]内的所有数的和。<br><br><br></p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><center>可以用暴力，线段树，以及将介绍的前缀和</center>
 <br><br><br>
 
-<h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>在读入数组a的时候（也就是cin或者scanf的时候），构建一个数组d，d[i]=d[i-1]+a[i];<br><br>&nbsp;&nbsp;&nbsp;&nbsp;也就是说d[i]实际上为a的前i项和</p>
+<h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;在读入数组a的时候（也就是cin或者scanf的时候），构建一个数组d，d[i]=d[i-1]+a[i];<br><br>&nbsp;&nbsp;&nbsp;&nbsp;也就是说d[i]实际上为a的前i项和</p>
 <br>
 见表：
 
@@ -145,7 +145,7 @@
 <h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><center>可以用暴力，线段树，以及将介绍的差分</center>
 <br><br><br>
 
-<h3 id="预处理-1"><a href="#预处理-1" class="headerlink" title="预处理"></a>预处理</h3><p>（同上）<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>在读入数组a的时候（也就是cin或者scanf的时候），构建一个数组d，d[i]=a[i]-a[i-1];<br><br>&nbsp;&nbsp;&nbsp;&nbsp;也就是说d[i]实际上为a的相邻两项的差值</p>
+<h3 id="预处理-1"><a href="#预处理-1" class="headerlink" title="预处理"></a>预处理</h3><p>（同上）<br><br>&nbsp;&nbsp;&nbsp;&nbsp;在读入数组a的时候（也就是cin或者scanf的时候），构建一个数组d，d[i]=a[i]-a[i-1];<br><br>&nbsp;&nbsp;&nbsp;&nbsp;也就是说d[i]实际上为a的相邻两项的差值</p>
 <br>
 见表：
 
@@ -216,11 +216,11 @@
 </tbody></table>
 <p><br>&nbsp;&nbsp;&nbsp;&nbsp;你会发现，其实就是序号2和5的位置处d值改变了下<br><br>那么推广：<br><br>&nbsp;&nbsp;&nbsp;&nbsp;对于[l,r]的区间进行了+k（k可以取负）操作，那么只需要把d[l]+=k;而把d[r+1]-=k处理就行了</p>
 <h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;按照前面提到的，利用a[i]=d[1]+……+d[i]的原理，输出a中所有的值即可</p>
-<h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><h3 id="问题描述-2"><a href="#问题描述-2" class="headerlink" title="问题描述"></a>问题描述</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>这个应该很简单了，求 a<sup>b</sup> % p。<br><br><br></p>
+<h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><h3 id="问题描述-2"><a href="#问题描述-2" class="headerlink" title="问题描述"></a>问题描述</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;这个应该很简单了，求 a<sup>b</sup> % p。<br><br><br></p>
 <h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><center>直接算的话，可以很清楚地料想到，会有对应的b次乘积操作。但是运用快速幂的方法，会减少很多次乘积操作</center>
 <br><br><br>
 
-<h3 id="举栗子"><a href="#举栗子" class="headerlink" title="举栗子"></a>举栗子</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>假如求a<sup>8</sup> (默认mod 1吧)<br><br>a * a = a<sup>2</sup><br><br>a<sup>2</sup> * a<sup>2</sup> = a<sup>4</sup><br><br>a<sup>4</sup> * a<sup>4</sup> = a<sup>8</sup><br><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;done!</p>
+<h3 id="举栗子"><a href="#举栗子" class="headerlink" title="举栗子"></a>举栗子</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;假如求a<sup>8</sup> (默认mod 1吧)<br><br>a * a = a<sup>2</sup><br><br>a<sup>2</sup> * a<sup>2</sup> = a<sup>4</sup><br><br>a<sup>4</sup> * a<sup>4</sup> = a<sup>8</sup><br><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;done!</p>
 <p><br>&nbsp;&nbsp;&nbsp;&nbsp;所以，对于本该8次的乘积操作，先只需要3次！</p>
 <p><br>&nbsp;&nbsp;&nbsp;&nbsp;那么这是b为2的整数次方，其他情况呢</p>
 <p><br>&nbsp;&nbsp;&nbsp;&nbsp;例如a<sup>13</sup> (默认 %1)呢，<br><br>&nbsp;&nbsp;&nbsp;&nbsp;可以利用a<sup>m * n</sup>=a<sup>m</sup> * a<sup>n</sup> 的原理<br><br>&nbsp;&nbsp;&nbsp;&nbsp;a<sup>13</sup> = a<sup>8</sup> * a<sup>4</sup> * a;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;乘积操作次数=3+2+1=6次，而非原来的13次</p>
