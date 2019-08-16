@@ -113,7 +113,7 @@
 见表：
 
 <pre><code>name/index | 0 |  1|  2|  3|  4|  5  
--|-|-|-|-|-|-|
+-|-|-|-|-|-|-
 a | \ | 2 |  6|  8|  4|  3|
 d | 0 | 2 |  8|  16|  20|  23|</code></pre><h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;输出即为d[r]-d[l-1]</p>
 <h2 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h2><h3 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>现有长度为n的数字序列，对其进行m次的区间修改（把某区间内的所有数加减一个值），输出改后的序列。<br><br><br></p>
@@ -125,13 +125,13 @@ d | 0 | 2 |  8|  16|  20|  23|</code></pre><h3 id="输出"><a href="#输出" cla
 见表：
 
 <pre><code>name/index | 0 |  1|  2|  3|  4|  5  
--|-|-|-|-|-|-|
+-|-|-|-|-|-|-
 a | \ | 2 |  6|  8|  4|  3|
 d | \ | 2 |  4|  2|  -4|  -1|</code></pre><p><br>&nbsp;&nbsp;&nbsp;&nbsp;且a[i]=d[1]+……+d[i]</p>
 <h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>举个栗子来说吧，如对于上述表，对[2,4]都+5处理，那么</p>
 <p>见表：</p>
 <pre><code>name/index | 0 |  1|  2|  3|  4|  5  
--|-|-|-|-|-|-|
+-|-|-|-|-|-|-
 a | \ | 2 |  11|  13|  9|  3|
 d | \ | 2 |  9|  2|  -4|  -6|</code></pre><p><br>&nbsp;&nbsp;&nbsp;&nbsp;你会发现，其实就是序号2和5的位置处d值改变了下<br><br>那么推广：<br><br>&nbsp;&nbsp;&nbsp;&nbsp;对于[l,r]的区间进行了+k（k可以取负）操作，那么只需要把d[l]+=k;而把d[r+1]-=k处理就行了</p>
 <h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><br>&nbsp;&nbsp;&nbsp;&nbsp;按照前面提到的，利用a[i]=d[1]+……+d[i]的原理，输出a中所有的值即可</p>
