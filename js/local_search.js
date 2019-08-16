@@ -19,7 +19,7 @@
 
 var searchFunc = function (path, search_id, content_id) {
   // 0x00. environment initialization
-  'use strict';
+  "use strict";
   var BTN = "<i id='local-search-close'>×</i>";
   var $input = document.getElementById(search_id);
   var $resultContent = document.getElementById(content_id);
@@ -133,7 +133,5 @@ var searchFunc = function (path, search_id, content_id) {
 
 var getSearchFile = function(){
     var path = "/search.xml";
-	var $resultContent = document.getElementById('local-search-result');
-	$resultContent.innerHTML = BTN + "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
     searchFunc(path, 'local-search-input', 'local-search-result');
 }
