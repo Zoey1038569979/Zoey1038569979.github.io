@@ -141,9 +141,9 @@
             
             <tag> 字符串 </tag>
             
-            <tag> 统计 </tag>
-            
             <tag> 时间比较 </tag>
+            
+            <tag> 统计 </tag>
             
             <tag> 浙大计算机研究生复试上机考试-2005年 </tag>
             
@@ -168,9 +168,9 @@
             
             <tag> 字符串 </tag>
             
-            <tag> gets()函数 </tag>
-            
             <tag> 统计 </tag>
+            
+            <tag> gets()函数 </tag>
             
             <tag> 杭州电子科技大学第三届程序设计大赛 </tag>
             
@@ -584,11 +584,11 @@
       
         <tags>
             
-            <tag> hexo </tag>
-            
             <tag> live2d </tag>
             
             <tag> 看板娘 </tag>
+            
+            <tag> hexo </tag>
             
         </tags>
       
