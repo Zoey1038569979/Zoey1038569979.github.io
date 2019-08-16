@@ -1,0 +1,5 @@
+<SCRIPT LANGUAGE="javascript"> 
+<!-- 
+window.open ('test1.html') 
+--> 
+</SCRIPT> 
