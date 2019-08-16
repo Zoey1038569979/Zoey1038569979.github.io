@@ -23,7 +23,7 @@ var searchFunc = function (path, search_id, content_id) {
   var BTN = "<i id='local-search-close'>×</i>";
   var $input = document.getElementById(search_id);
   var $resultContent = document.getElementById(content_id);
-  $resultContent.innerHTML = BTN + "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+  $resultContent.innerHTML = BTN + "<ul><span class='local-search-empty'>Search for the first time are load the index file, please later...<span></ul>";
   $.ajax({
     // 0x01. load xml file
     url: path,
@@ -119,7 +119,7 @@ var searchFunc = function (path, search_id, content_id) {
         });
         str += "</ul>";
         if (str.indexOf('<li>') === -1) {
-          return $resultContent.innerHTML = BTN + "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+          return $resultContent.innerHTML = BTN + "<ul><span class='local-search-empty'>Didn't find the content, please try to change the search term.<span></ul>";
         }
         $resultContent.innerHTML = BTN + str;
       });
