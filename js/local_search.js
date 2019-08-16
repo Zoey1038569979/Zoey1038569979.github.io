@@ -20,7 +20,7 @@
 var searchFunc = function (path, search_id, content_id) {
   // 0x00. environment initialization
   "use strict";
-  var BTN = "<i id='local-search-close'>¡Á</i>";
+  var BTN = "<i id='local-search-close'>Ã—</i>";
   var $input = document.getElementById(search_id);
   var $resultContent = document.getElementById(content_id);
   $resultContent.innerHTML = BTN + "<ul><span class='local-search-empty'>Search for the first time are load the index file, please later...<span></ul>";
