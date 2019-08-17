@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="Zoey"><meta name="renderer" content="webkit"><meta name="copyright" content="Zoey"><meta name="keywords" content="Hexo"><meta name="description" content="从前很慢"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="baidu-site-verification" content="2gYFKqqwuH"><title>关于HDOJ 1266题(Reverse Number) 的理解(C/C++) · Mr.Z's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!--jquery脚本的引入--><script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><!--在你的layout文件中script最多的地方加入这么一句话--><script type="text/javascript" src="/js/local_search.js"></script><!--网站自动提交--><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+  })();</script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/Icon.jpg" width="100%"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">zoey</div><div class="profile-signature">开始搞事情了</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/ironic333" target="_black">ironic333</a></span><span><a href="//Zoey1038569979.github.io" target="_black">outland</a></span><span><a href="https://evtzyz.coding-pages.com/" target="_black">国内主页</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);background-size:100% 100%;background-attachment: fixed;"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Z's Blog</a></div><div class="intro-nav-label-box"> <a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a><form class="site-search-form"><input class="st-search-input" id="local-search-input" type="text" placeholder=" 请输入搜索内容"><div class="local-search-result-cls" id="local-search-result"></div></form><script type="text/javascript">var inputArea       = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">关于HDOJ 1266题(Reverse Number) 的理解(C/C++)</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-08-17</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="hdoj"> hdoj</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数字逆序"> 数字逆序</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="HDU 2006-4 Programming Contest"> HDU 2006-4 Programming Contest</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">608</span> | Reading time: <span class="post-count">3</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p><br>&nbsp;&nbsp;&nbsp;&nbsp;本来应该是一个水题的，结果还是细节上有点小问题，之前WA的2次代码没有处理好中间0，例如输入502，应该输出205的，结果按之前的代码的话就直接给中间0那给截断了，只输出了一个两位数……所以肯定是WA了。<a id="more"></a>之后注意了下中间0，就给AC了。<br>在这里也给出除了例题的另一组特殊数据吧，方便小伙伴们测试</p>
+<p>input：</p>
+<p>3<br>-0012560020<br>00000<br>00205<br><br><br><br>output：</p>
+<p>-20065210<br>0<br>502<br><br><br></p>
+<hr>
+<h2 id="题目描述：Reverse-Number（数字逆序）"><a href="#题目描述：Reverse-Number（数字逆序）" class="headerlink" title="题目描述：Reverse Number（数字逆序）"></a>题目描述：Reverse Number（数字逆序）</h2><center>Reverse Number</center>
+
+
+<center>Time Limit: 2000/1000 MS (Java/Others)    
+<br>Memory Limit: 65536/32768 K (Java/Others)
+</center>
+
+<p>Problem Description<br>&nbsp;&nbsp;&nbsp;&nbsp;Welcome to 2006’4 computer college programming contest!</p>
+<p>Specially, I give my best regards to all freshmen! You are the future of HDU ACM! And now, I must tell you that ACM problems are always not so easy, but, except this one… Ha-Ha!</p>
+<p>Give you an integer; your task is to output its reverse number. Here, reverse number is defined as follows:</p>
+<ol>
+<li>The reverse number of a positive integer ending without 0 is general reverse, for example, reverse (12) = 21;</li>
+<li>The reverse number of a negative integer is negative, for example, reverse (-12) = -21;</li>
+<li>The reverse number of an integer ending with 0 is described as example, reverse (1200) = 2100.</li>
+</ol>
+<p>Input<br>&nbsp;&nbsp;&nbsp;&nbsp;Input file contains multiple test cases. There is a positive integer n (n&lt;100) in the first line, which means the number of test cases, and then n 32-bit integers follow.</p>
+<p>Output<br>&nbsp;&nbsp;&nbsp;&nbsp;For each test case, you should output its reverse number, one case per line.</p>
+<p>Sample Input<br>3<br>12<br>-12<br>1200</p>
+<p>Sample Output<br>21<br>-21<br>2100</p>
+<center>Author
+&nbsp;&nbsp;&nbsp;&nbsp;lcy</center>
+
+<center>Source
+&nbsp;&nbsp;&nbsp;&nbsp;HDU 2006-4 Programming Contest</center>
+
+<h2 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h2><p>More info:<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1266" target="_blank" rel="noopener">Question</a></p>
+<h2 id="Accepted代码"><a href="#Accepted代码" class="headerlink" title="Accepted代码"></a>Accepted代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> n,input_;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;input_;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> x = input_,a,count=<span class="number">0</span>,num=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (x) &#123;</span><br><span class="line">            a = x % <span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">            num++;</span><br><span class="line">        &#125;</span><br><span class="line">        x = input_; a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (x % a) count++;</span><br><span class="line">            a *= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> res = <span class="number">0</span>,k=num<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (count) &#123;</span><br><span class="line">            res += ((<span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span>)(input_ / <span class="built_in">pow</span>(<span class="number">10</span>, num - count ) )% <span class="number">10</span>) * <span class="built_in">pow</span>(<span class="number">10</span>, k);</span><br><span class="line">            k--; count--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; res &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;ps.直接用int感觉应该也可以过吧，题目里貌似是说了int32位的数，我的AC代码只是因为之前WA时误以为是数据类型的锅，就给改成了long long int，有兴趣的小伙伴可以试试直接跑int。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p>感谢&nbsp;cnxo &nbsp; 的 <a href="https://www.cnblogs.com/webmen/p/5739321.html" target="_blank" rel="noopener">HDOJ 1266 Reverse Number（数字反向输出题）</a> 提示了我之前WA考略欠缺的地方（不过貌似他给的数据输出有点不对？已给老哥评论了，等回复）</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://Zoey1038569979.github.io">Zoey</a></p><p> <span>Link:  </span><a href="http://Zoey1038569979.github.io/2019/08/17/hdoj1266/">http://Zoey1038569979.github.io/2019/08/17/hdoj1266/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2019/08/16/algorithmNotes_PrefixSum_Difference_Calculation/" title="算法笔记 前缀和 差分 快速幂(C/C++)"><span>NextPost ></span><br><span class="nextTitle">算法笔记 前缀和 差分 快速幂(C/C++)</span></a><div class="clear"></div></div><div id="comment"><div id="container"></div><link rel="stylesheet" href="https://billts.site/extra_css/gitment.css"><script src="https://billts.site/js/gitment.js"></script><script>var gitment = new Gitment({
+  id: '关于HDOJ 1266题(Reverse Number) 的理解(C/C++)',
+  owner: 'Zoey1038569979',
+  repo: 'Zoey1038569979.github.io',
+  oauth: {
+    client_id: '418f60571b475137fb02',
+    client_secret: '6a9bad2279afb32f22db0cc07b7a1ca08baac4fa',
+  },
+})
+gitment.render('container')</script></div></section></article><footer><div id="cxo-footer-outer"><link rel="stylesheet" href="/live2d/css/live2d.css"><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="280" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://zoey1038569979.github.io/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/tia/model.json");</script><div id="cxo-footer-inner"></div><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述：Reverse-Number（数字逆序）"><span class="toc-number">1.</span> <span class="toc-text">题目描述：Reverse Number（数字逆序）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原题链接"><span class="toc-number">2.</span> <span class="toc-text">原题链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Accepted代码"><span class="toc-number">3.</span> <span class="toc-text">Accepted代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考博客"><span class="toc-number">4.</span> <span class="toc-text">参考博客</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
