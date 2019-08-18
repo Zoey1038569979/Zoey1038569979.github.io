@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="Zoey"><meta name="renderer" content="webkit"><meta name="copyright" content="Zoey"><meta name="keywords" content="Hexo"><meta name="description" content="从前很慢"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="baidu-site-verification" content="2gYFKqqwuH"><title>关于HDOJ 1323题(Perfection) 的理解(C/C++) · Mr.Z's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!--jquery脚本的引入--><script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><!--在你的layout文件中script最多的地方加入这么一句话--><script type="text/javascript" src="/js/local_search.js"></script><!--网站自动提交--><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+  })();</script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/Icon.jpg" width="100%"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">zoey</div><div class="profile-signature">开始搞事情了</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/ironic333" target="_black">ironic333</a></span><span><a href="//Zoey1038569979.github.io" target="_black">outland</a></span><span><a href="https://evtzyz.coding-pages.com/" target="_black">国内主页</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);background-size:100% 100%;background-attachment: fixed;"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Z's Blog</a></div><div class="intro-nav-label-box"> <a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a><form class="site-search-form"><input class="st-search-input" id="local-search-input" type="text" placeholder=" 请输入搜索内容"><div class="local-search-result-cls" id="local-search-result"></div></form><script type="text/javascript">var inputArea       = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">关于HDOJ 1323题(Perfection) 的理解(C/C++)</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-08-18</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="hdoj"> hdoj</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="cout输出格式"> cout输出格式</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="简单题"> 简单题</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Mid-Atlantic USA 1996"> Mid-Atlantic USA 1996</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">739</span> | Reading time: <span class="post-count">4</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p><br>&nbsp;&nbsp;&nbsp;&nbsp;水题。<br><br><br><br><a id="more"></a><br><br><br><br><br></p>
+<hr>
+<h2 id="题目描述：Perfection"><a href="#题目描述：Perfection" class="headerlink" title="题目描述：Perfection"></a>题目描述：Perfection</h2><center>Perfection</center>
+
+
+<center>Time Limit: 2000/1000 MS (Java/Others)    
+<br>Memory Limit: 65536/32768 K (Java/Others)
+</center>
+
+<p>Problem Description<br>&nbsp;&nbsp;&nbsp;&nbsp;From the article Number Theory in the 1994 Microsoft Encarta: “If a, b, c are integers such that a = bc, a is called a multiple of b or of c, and b or c is called a divisor or factor of a. If c is not 1/-1, b is called a proper divisor of a. Even integers, which include 0, are multiples of 2, for example, -4, 0, 2, 10; an odd integer is an integer that is not even, for example, -5, 1, 3, 9. A perfect number is a positive integer that is equal to the sum of all its positive, proper divisors; for example, 6, which equals 1 + 2 + 3, and 28, which equals 1 + 2 + 4 + 7 + 14, are perfect numbers. A positive number that is not perfect is imperfect and is deficient or abundant according to whether the sum of its positive, proper divisors is smaller or larger than the number itself. Thus, 9, with proper divisors 1, 3, is deficient; 12, with proper divisors 1, 2, 3, 4, 6, is abundant.”<br>Given a number, determine if it is perfect, abundant, or deficient. </p>
+<p>Input<br>&nbsp;&nbsp;&nbsp;&nbsp;A list of N positive integers (none greater than 60,000), with 1 &lt; N &lt; 100. A 0 will mark the end of the list.</p>
+<p>Output<br>&nbsp;&nbsp;&nbsp;&nbsp;The first line of output should read PERFECTION OUTPUT. The next N lines of output should list for each input integer whether it is perfect, deficient, or abundant, as shown in the example below. Format counts: the echoed integers should be right justified within the first 5 spaces of the output line, followed by two blank spaces, followed by the description of the integer. The final line of output should read END OF OUTPUT.</p>
+<p>Sample Input<br>    15 28 6 56 60000 22 496 0</p>
+<p>Sample Output<br>    PERFECTION OUTPUT<br>       15  DEFICIENT<br>       28  PERFECT<br>        6  PERFECT<br>       56  ABUNDANT<br>    60000  ABUNDANT<br>       22  DEFICIENT<br>      496  PERFECT<br>    END OF OUTPUT</p>
+<p>Source</p>
+<center>
+&nbsp;&nbsp;&nbsp;&nbsp;Mid-Atlantic USA 1996</center>
+
+<br>
+<br><br>
+
+<h2 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h2><p>More info:<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1323" target="_blank" rel="noopener">Question</a></p>
+<br>
+<br><br>
+
+<h2 id="cout输出格式控制（复习）"><a href="#cout输出格式控制（复习）" class="headerlink" title="cout输出格式控制（复习）"></a>cout输出格式控制（复习）</h2><p>同cout输出格式控制题可见<a href="/2019/08/09/hdoj1014_blog/">hdoj 1014</a></p>
+<h3 id="cout输出位数控制———整体输出位数的控制"><a href="#cout输出位数控制———整体输出位数的控制" class="headerlink" title="cout输出位数控制———整体输出位数的控制"></a>cout输出位数控制———整体输出位数的控制</h3><p>头文件：iomanip<br>函数方法：setw(n);<br>作用：下一个输出量时，设定输出的长宽为n个字符。输出量不达n个字符时，会在输出量左边填补对应的空白；若宽于n个字符，则按实际需要全部输出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">5</span>)&lt;&lt;n &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果示意：<br><img src="/images/hdoj1014/0.png" alt="运行结果示意"></p>
+<h3 id="cout靠左或者靠右输出的设置"><a href="#cout靠左或者靠右输出的设置" class="headerlink" title="cout靠左或者靠右输出的设置"></a>cout靠左或者靠右输出的设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">//默认是右对齐.</span><br><span class="line">cout &lt;&lt;left ;                                 // 左对齐</span><br><span class="line">cout &lt;&lt;setw(5) &lt;&lt;12 &lt;&lt;setw(5) &lt;&lt;34 &lt;&lt;endl ;   // 12___34___</span><br><span class="line"></span><br><span class="line">cout &lt;&lt;right ;                                // 默认 右对齐</span><br><span class="line">cout &lt;&lt;setw(5) &lt;&lt;12 &lt;&lt;setw(5) &lt;&lt;34 &lt;&lt;endl ;   // ___12___34</span><br><span class="line"></span><br><span class="line"><span class="comment">##  Accepted代码</span></span><br><span class="line"></span><br><span class="line">``` c++</span><br><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include&lt;iomanip&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int factor_sum(int x) &#123;</span><br><span class="line">  int sum = 0;</span><br><span class="line">  <span class="keyword">for</span> (int i = 1; i &lt; x; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (0 == x % i) sum += i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line">int flag,x;</span><br><span class="line">int <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">  flag = 1;</span><br><span class="line">  <span class="keyword">while</span> (cin &gt;&gt; x) &#123;</span><br><span class="line">    <span class="keyword">if</span> (0 == x) &#123;</span><br><span class="line">      cout &lt;&lt; <span class="string">"END OF OUTPUT"</span> &lt;&lt; endl;</span><br><span class="line">      <span class="built_in">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">      cout &lt;&lt; <span class="string">"PERFECTION OUTPUT"</span> &lt;&lt; endl;</span><br><span class="line">      flag = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; setw(5) &lt;&lt; x &lt;&lt; <span class="string">"  "</span>;</span><br><span class="line">    <span class="keyword">if</span> (factor_sum(x) == x)cout &lt;&lt; <span class="string">"PERFECT"</span>;</span><br><span class="line">    <span class="keyword">if</span> (factor_sum(x) &lt; x) cout &lt;&lt; <span class="string">"DEFICIENT"</span>;</span><br><span class="line">    <span class="keyword">if</span> (factor_sum(x) &gt; x) cout &lt;&lt; <span class="string">"ABUNDANT"</span>;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p>  无</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://zoey1038569979.github.io">Zoey</a></p><p> <span>Link:  </span><a href="https://zoey1038569979.github.io/2019/08/18/hdoj1323/">https://zoey1038569979.github.io/2019/08/18/hdoj1323/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2019/08/18/hdoj1303/" title="关于HDOJ 1303题(Doubles 双倍) 的理解(C/C++)"><span>NextPost ></span><br><span class="nextTitle">关于HDOJ 1303题(Doubles 双倍) 的理解(C/C++)</span></a><div class="clear"></div></div><div id="comment"><div id="container"></div><link rel="stylesheet" href="https://billts.site/extra_css/gitment.css"><script src="https://billts.site/js/gitment.js"></script><script>var gitment = new Gitment({
+  id: '关于HDOJ 1323题(Perfection) 的理解(C/C++)',
+  owner: 'Zoey1038569979',
+  repo: 'Zoey1038569979.github.io',
+  oauth: {
+    client_id: '418f60571b475137fb02',
+    client_secret: '6a9bad2279afb32f22db0cc07b7a1ca08baac4fa',
+  },
+})
+gitment.render('container')</script></div></section></article><footer><div id="cxo-footer-outer"><link rel="stylesheet" href="/live2d/css/live2d.css"><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="280" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://zoey1038569979.github.io/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/tia/model.json");</script><div id="cxo-footer-inner"></div><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述：Perfection"><span class="toc-number">1.</span> <span class="toc-text">题目描述：Perfection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原题链接"><span class="toc-number">2.</span> <span class="toc-text">原题链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cout输出格式控制（复习）"><span class="toc-number">3.</span> <span class="toc-text">cout输出格式控制（复习）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cout输出位数控制———整体输出位数的控制"><span class="toc-number">3.1.</span> <span class="toc-text">cout输出位数控制———整体输出位数的控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cout靠左或者靠右输出的设置"><span class="toc-number">3.2.</span> <span class="toc-text">cout靠左或者靠右输出的设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考博客"><span class="toc-number">4.</span> <span class="toc-text">参考博客</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
