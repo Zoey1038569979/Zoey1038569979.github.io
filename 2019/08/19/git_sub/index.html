@@ -143,7 +143,7 @@
 <br>
 <br><br>
 
-<h2 id="连接本地和远程仓库并提交"><a href="#连接本地和远程仓库并提交" class="headerlink" title="连接本地和远程仓库并提交"></a>连接本地和远程仓库并提交</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:你的github的用户名/仓库名.git</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<h2 id="连接本地和远程仓库并提交"><a href="#连接本地和远程仓库并提交" class="headerlink" title="连接本地和远程仓库并提交"></a>连接本地和远程仓库并提交</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:你的github的用户名/仓库名.git</span><br><span class="line"></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
 
 <p>前一个命令是把本地和远程仓库连接起来，第二个命令是把缓存里的文件推送到远程上去<br><br></p>
 <p><img src="/images/git_sub/git_res.png" alt="add命令截图"></p>
@@ -158,12 +158,20 @@
 <ol>
 <li>配置用户信息</li>
 </ol>
-<figure class="highlight plain"><figcaption><span>config --global user.name [username]```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">``` git config --global user.email [email]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name [username]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email [email]</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li>查询用户信息</li>
 </ol>
-<figure class="highlight plain"><figcaption><span>config --list```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 如果push遇到在输入密码是熟错后，就会报这个错误fatal: Authentication failed for</span><br><span class="line"></span><br><span class="line">解决办法：</span><br><span class="line"></span><br><span class="line">```git config --system --unset credential.helper</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果push遇到在输入密码是熟错后，就会报这个错误fatal: Authentication failed for</li>
+</ol>
+<p>解决办法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --system --unset credential.helper</span><br></pre></td></tr></table></figure>
 
 <p>之后你在push就会提示输入名称和密码</p>
 <p><br><br><br>该条目内容来自博主&nbsp;酒壮熊人胆&nbsp;的<a href="https://blog.csdn.net/u011394598/article/details/80256896" target="_blank" rel="noopener">git操作及fatal: Authentication failed for错误解决</a></p>
