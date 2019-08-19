@@ -158,17 +158,13 @@
 <ol>
 <li>配置用户信息</li>
 </ol>
-<p>git config –global user.name [username]</p>
-<p>git config –global user.email [email]</p>
+<figure class="highlight plain"><figcaption><span>config --global user.name [username]```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">``` git config --global user.email [email]</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
 <li>查询用户信息</li>
 </ol>
-<p>git config –list</p>
-<ol start="3">
-<li>如果push遇到在输入密码是熟错后，就会报这个错误fatal: Authentication failed for</li>
-</ol>
-<p>解决办法：</p>
-<p>git config –system –unset credential.helper</p>
+<figure class="highlight plain"><figcaption><span>config --list```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 如果push遇到在输入密码是熟错后，就会报这个错误fatal: Authentication failed for</span><br><span class="line"></span><br><span class="line">解决办法：</span><br><span class="line"></span><br><span class="line">```git config --system --unset credential.helper</span><br></pre></td></tr></table></figure>
+
 <p>之后你在push就会提示输入名称和密码</p>
 <p><br><br><br>该条目内容来自博主&nbsp;酒壮熊人胆&nbsp;的<a href="https://blog.csdn.net/u011394598/article/details/80256896" target="_blank" rel="noopener">git操作及fatal: Authentication failed for错误解决</a></p>
 <h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p>博主&nbsp;必须往前走&nbsp;的<a href="https://www.cnblogs.com/zqr99/p/9379918.html" target="_blank" rel="noopener">Git——如何将本地项目提交至远程仓库(第一次)</a></p>
