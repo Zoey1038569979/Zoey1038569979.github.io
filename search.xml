@@ -68,13 +68,13 @@
       
         <tags>
             
-            <tag> 安卓 </tag>
-            
             <tag> android studio </tag>
             
             <tag> Spring </tag>
             
             <tag> SpringMVC </tag>
+            
+            <tag> Android </tag>
             
             <tag> http上传文件 </tag>
             
@@ -334,9 +334,9 @@
             
             <tag> hdoj </tag>
             
-            <tag> 简单题 </tag>
-            
             <tag> 杭电ACM集训队训练赛（VII） </tag>
+            
+            <tag> 简单题 </tag>
             
         </tags>
       
@@ -359,9 +359,9 @@
             
             <tag> 粗心 </tag>
             
-            <tag> 杭电ACM集训队训练赛（VII） </tag>
-            
             <tag> 回文 </tag>
+            
+            <tag> 杭电ACM集训队训练赛（VII） </tag>
             
         </tags>
       
@@ -703,9 +703,9 @@
             
             <tag> hdoj </tag>
             
-            <tag> 思路 </tag>
-            
             <tag> 进制转换 </tag>
+            
+            <tag> 思路 </tag>
             
             <tag> Zhejiang University Local Contest 2005 </tag>
             
